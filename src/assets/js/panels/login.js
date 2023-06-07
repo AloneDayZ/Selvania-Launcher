@@ -21,7 +21,6 @@ class Login {
     getOnline() {
         console.log(`Initializing microsoft Panel...`)
         console.log(`Initializing mojang Panel...`)
-        this.loginMicrosoft();
         this.loginMojang();
         document.querySelector('.cancel-login').addEventListener("click", () => {
             document.querySelector(".cancel-login").style.display = "none";
@@ -33,7 +32,6 @@ class Login {
         console.log(`Initializing microsoft Panel...`)
         console.log(`Initializing mojang Panel...`)
         console.log(`Initializing offline Panel...`)
-        this.loginMicrosoft();
         this.loginOffline();
         document.querySelector('.cancel-login').addEventListener("click", () => {
             document.querySelector(".cancel-login").style.display = "none";
@@ -52,7 +50,7 @@ class Login {
             cancelBtn.disabled = true;
             ipcRenderer.invoke('Microsoft-window', this.config.client_id).then(account_connect => {
                 if (!account_connect) {
-                    microsoftBtn.disabled = false;
+                    microsoftBtn.disabled = true;
                     mojangBtn.disabled = false;
                     cancelBtn.disabled = false;
                     return;
@@ -82,13 +80,13 @@ class Login {
                 accountSelect(account.uuid)
                 changePanel("home");
 
-                microsoftBtn.disabled = false;
+                microsoftBtn.disabled = true;
                 mojangBtn.disabled = false;
                 cancelBtn.disabled = false;
                 cancelBtn.style.display = "none";
             }).catch(err => {
                 console.log(err)
-                microsoftBtn.disabled = false;
+                microsoftBtn.disabled = true;
                 mojangBtn.disabled = false;
                 cancelBtn.disabled = false;
 
@@ -190,7 +188,7 @@ class Login {
         let loginBtn = document.querySelector(".login-btn")
         let mojangBtn = document.querySelector('.mojang')
 
-        mojangBtn.innerHTML = "Offline"
+        mojangBtn.innerHTML = "Rejoindre"
 
         mojangBtn.addEventListener("click", () => {
             document.querySelector(".login-card").style.display = "none";
